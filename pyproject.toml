@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "tonescript"
+version = "1.0.0"
+description = "Python package for working with ToneScript, a syntax for describing the characteristics of the call progress tones used in telephony."
+authors = ["Gary DeReese <garydereese@sbcglobal.net>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+[tool.poetry.dev-dependencies]
+pylint = "^2.10.2"
+pytest = "^6.2.5"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
