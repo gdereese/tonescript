@@ -24,7 +24,7 @@ jobs:
       
       - name: Install package
         run: |
-          poetry install
+          $HOME/.poetry/bin/poetry install
           
       - name: Lint
         run: |
