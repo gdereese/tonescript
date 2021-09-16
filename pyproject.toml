@@ -2,8 +2,13 @@
 name = "tonescript"
 version = "1.0.0"
 description = "Python package for working with ToneScript, a syntax for describing the characteristics of the call progress tones used in telephony."
-authors = ["Gary DeReese <garydereese@sbcglobal.net>"]
 license = "MIT"
+authors = ["Gary DeReese <garydereese@sbcglobal.net>"]
+readme = "README.md"
+#homepage = ""
+repository = "https://github.com/gdereese/tonescript"
+#documentation = ""
+keywords = ["tonescript", "parser"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
@@ -12,6 +17,9 @@ python = "^3.8"
 pdoc3 = "^0.10.0"
 pylint = "^2.10.2"
 pytest = "^6.2.5"
+
+[tool.poetry.urls]
+"Issues" = "https://github.com/gdereese/tonescript/issues"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
