@@ -1,105 +1,97 @@
+"""
+Object model for representing the structure and properties of ToneScripts and their components.
+"""
+
+from dataclasses import dataclass
 from decimal import Decimal
-from typing import MutableSequence
 from typing import Sequence
 
 
-class CadScriptSegment:
-    def __init__(self,
-        duration_on: Decimal = None,
-        duration_off: Decimal = None,
-        freq_nums: Sequence[int] = None
-    ):
-        self._freq_nums = list(freq_nums)
+@dataclass
+class ToneSegment:
+    duration_on: Decimal
+    duration_off: Decimal
+    freq_nums: Sequence[int]
 
-        self.duration_off = duration_off
-        self.duration_on = duration_on
+    def __str__(self):
+        if self.duration_on.is_infinite():
+            duration_on = "*"
+        else:
+            duration_on = f"{self.duration_on:.3g}s"
 
-    def __str__(self) -> str:
-        return f"{self.duration_on:.4g}/{self.duration_off:.4g}/{'+'.join(map(str, self.freq_nums))}"
+        if self.duration_off.is_infinite():
+            duration_off = "*"
+        else:
+            duration_off = f"{self.duration_off:.3g}s"
 
-    @property
-    def freq_nums(self) -> MutableSequence[int]:
-        return self._freq_nums
+        return f"{self.__class__.__name__} on={duration_on} off={duration_off} frequencies={self.freq_nums}>"
 
 
-class CadScriptSection:
-    def __init__(self,
-        duration: Decimal = None,
-        segments: Sequence[CadScriptSegment] = None
-    ):
-        self._segments = list(segments)
+@dataclass
+class CadenceSection:
+    duration: Decimal
+    segments: Sequence[ToneSegment]
 
-        self.duration = duration
-
-    def __str__(self) -> str:
-        return f"{self.duration:.4g}({','.join(map(str, self.segments))})"
-
-    @property
-    def audio_duration(self):
+    def __str__(self):
         if self.duration.is_infinite():
-            return sum(s.duration_on + s.duration_off for s in self.segments)
-        return self.duration
+            duration = "*"
+        else:
+            duration = f"{self.duration:.3g}s"
 
-    @property
-    def segments(self) -> MutableSequence[CadScriptSegment]:
-        return self._segments
+        return f"<{self.__class__.__name__} duration={duration} segments={len(self.segments)}>"
 
 
+@dataclass
 class CadScript:
-    def __init__(self,
-        sections: Sequence[CadScriptSection] = None
-    ):
-        self._sections = list(sections)
+    sections: Sequence[CadenceSection]
 
-    def __str__(self) -> str:
-        return ";".join(map(str, self.sections))
-
-    @property
-    def audio_duration(self):
-        return sum(s.audio_duration for s in self.sections)
-
-    @property
-    def sections(self) -> MutableSequence[CadScriptSection]:
-        return self._sections
+    def __str__(self):
+        return f"<{self.__class__.__name__} sections={len(self.sections)}>"
 
 
-class FreqScriptComponent:
-    def __init__(self,
-        frequency: int = None,
-        level: Decimal = None
-    ):
-        self.frequency = frequency
-        self.level = level
+@dataclass
+class FrequencyComponent:
+    frequency: int
+    level: Decimal
 
-    def __str__(self) -> str:
-        return f"{self.frequency}@{self.level:.2g}"
+    def __str__(self):
+        return f"<{self.__class__.__name__} frequency={self.frequency}Hz level={self.level:.1g}dBm>"
 
 
+@dataclass
 class FreqScript:
-    def __init__(self,
-        components: Sequence[FreqScriptComponent] = None
-    ):
-        self._components = list(components)
+    components: Sequence[FrequencyComponent]
 
-    def __str__(self) -> str:
-        return ";".join(map(str, self.components))
-
-    def components(self) -> MutableSequence[FreqScriptComponent]:
-        return self._components
+    def __str__(self):
+        return f"<{self.__class__.__name__} components={len(self.components)}>"
 
 
+@dataclass
 class ToneScript:
-    def __init__(self,
-        freqscript: FreqScript = None,
-        cadscript: CadScript = None
-    ):
-        self._freqscript = freqscript or FreqScript()
+    freqscript: FreqScript
+    cadscript: CadScript
 
-        self.cadscript = cadscript
+    def __str__(self):
+        lines = []
 
-    def __str__(self) -> str:
-        return f"{self.freqscript!s};{self.cadscript!s}"
+        lines.append("Frequency components:")
+        for comp_idx, comp in enumerate(self.freqscript.components):
+            lines.append(f"    {comp_idx + 1}) {comp.frequency} Hz @ {int(comp.level):.3g} dBm")
 
-    @property
-    def freqscript(self) -> FreqScript:
-        return self._freqscript
+        lines.append("Cadence sections:")
+        for sec_idx, sec in enumerate(self.cadscript.sections):
+            lines.append(f"    {sec_idx + 1}) For {sec.duration:.4g} s:")
+            for seg_idx, seg in enumerate(sec.segments):
+                duration_parts = []
+                if seg.duration_on.is_infinite():
+                    duration_parts.append("Always on")
+                else:
+                    duration_parts.append("On for {seg.duration_on:.4g} s")
+                if seg.duration_off.is_infinite():
+                    duration_parts.append("Always off")
+                elif seg.duration_off != 0:
+                    duration_parts.append(f"Off for {seg.duration_off:.4g} s")
+                duration = ", ".join(duration_parts)
+                lines.append(f"        {seg_idx + 1}) {duration}, using frequencies {', '.join(map(str, seg.freq_nums))}")
+
+        return "\n".join(lines)

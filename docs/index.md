@@ -1,18 +1,10 @@
-# tonescript
+## What is ToneScript?
 
-Python package for working with ToneScript, a syntax for describing the characteristics of the call progress tones used in telephony. It is the primary method for configuring tones in Sipura, Linksys, and Cisco VoIP systems.
+According to [Wikipedia](https://en.wikipedia.org/wiki/ToneScript):
 
-## Features
-
-* Parses ToneScript into its components: frequencies, cadence sections, and tone segments
-* Constructs ToneScript from component objects
-* Generates tone audio from ToneScript objects
-
-## Installation
-
-```shell
-pip install tonescript
-```
+> ToneScript is a description syntax for the characteristics of call-progress tones.
+>
+> A call progress tone is a pattern of audible tones played to the caller in a telephone call, conveying the status of the call. ToneScript describes the pattern of frequency, cadence, and level of the signal. Many Internet telephony devices support configuration options for users to customize the tones, but standard patterns are provided for various telephone administrations. ToneScript is used in Sipura, Linksys and Cisco family of IP telephony products.
 
 ## Usage
 
@@ -97,34 +89,15 @@ with wave.open("./tone.wav", "w") as wav_file:
     wav_file.setsampwidth(2)
     wav_file.setframerate(sample_rate)
     wav_file.writeframes(audio_bytes)
-
 ```
 
 ## Support
 
-TODO: use GitHub issues
+TODO
 
 ## Contributing
 
-### Installing for development
-
-```shell
-poetry install
-```
-
-### Linting source files
-
-```shell
-poetry run pylint src tests
-```
-
-### Running tests
-
-```shell
-poetry run pytest
-```
-
-TODO: workflow for branching and versioning
+TODO
 
 ## License
 

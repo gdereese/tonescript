@@ -1,13 +1,11 @@
-start                : freqscript ";" cadscript
-freqscript           : _list{freq_comp, ","}
-freq_comp            : INT "@" LEVEL
-cadscript            : section [";" section]
-section              : DURATION "(" _list{segment, ","} ")"
-segment              : DURATION "/" DURATION ["/" _list{INT, "+"}]
+start      : freqscript ";" cadscript
+freqscript : freq_comp ("," freq_comp)*
+freq_comp  : INT "@" LEVEL
+cadscript  : section [";" section]
+section    : DURATION "(" segment ("," segment)* ")"
+segment    : DURATION "/" DURATION ["/" INT ("+" INT)*]
 
-_list{x, sep}        : x (sep x)*
-
-DURATION             : "*" | INT+ | INT* "." INT ~ 1..3
-LEVEL                : "-"? (INT+ | INT* "." INT)
+DURATION   : "*" | INT* "." INT ~ 1..3 | INT+
+LEVEL      : "-"? (INT* "." INT | INT+)
 
 %import common.INT
