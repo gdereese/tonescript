@@ -11,6 +11,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    
+    env:
+      POETRY: $HOME/.poetry/bin/poetry
 
     steps:
       - uses: actions/checkout@v2
@@ -24,12 +27,12 @@ jobs:
       
       - name: Install package
         run: |
-          $HOME/.poetry/bin/poetry install
+          $POETRY install
           
       - name: Lint
         run: |
-          poetry run pylint src tests
+          $POETRY run pylint src tests
           
       - name: Test
         run: |
-          poetry run pytest
+          $POETRY run pytest
