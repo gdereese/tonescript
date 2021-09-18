@@ -12,6 +12,7 @@ keywords = ["parser", "telephony", "tonescript"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
+lark = "^0.11.3"
 
 [tool.poetry.dev-dependencies]
 pdoc3 = "^0.10.0"
