@@ -8,7 +8,7 @@ readme = "README.md"
 #homepage = ""
 repository = "https://github.com/gdereese/tonescript"
 #documentation = ""
-keywords = ["tonescript", "parser"]
+keywords = ["parser", "telephony", "tonescript"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
