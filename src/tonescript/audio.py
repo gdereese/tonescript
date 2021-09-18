@@ -1,5 +1,5 @@
 """
-Used for rendering audio data from parsed ToneScript input.
+Used for generating audio data from parsed ToneScript input.
 """
 
 from decimal import Decimal
@@ -20,7 +20,15 @@ from .model import ToneScript
 from .model import ToneSegment
 
 
-def render(ts: ToneScript, sample_rate: int) -> Iterable[float]:
+def generate(ts: ToneScript, sample_rate: int) -> Iterable[float]:
+    """
+    Generates the audio data for a ToneScript.
+
+    Returns a iterable of audio samples represented as `float` values, ranging from `-1.0` to
+    `1.0`. The tone can be produced by playing back the audio samples at the rate specified by
+    the `sample_rate` argument.
+    """
+
     return _expand_cadence(ts, sample_rate)
 
 

@@ -5,10 +5,13 @@ call progress tones used in telephony.
 .. include:: ../../docs/index.md
 """
 
-from ._parser import *
-from .model import *
+from ._parser import parse
+from ._parser import unparse
+from ._wave import render
+
 
 __all__ = [
     parse.__name__,
+    render.__name__,
     unparse.__name__,
 ]

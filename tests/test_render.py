@@ -1,8 +1,6 @@
 from decimal import Decimal
-from struct import pack
-import wave
 
-from tonescript.audio import render
+from tonescript import render
 from tonescript.model import CadScript
 from tonescript.model import CadenceSection
 from tonescript.model import FreqScript
@@ -11,7 +9,23 @@ from tonescript.model import ToneScript
 from tonescript.model import ToneSegment
 
 
-def test_dial_tone():
+def test_8000_8():
+    _render(8000, 1)
+
+
+def test_8000_16():
+    _render(8000, 2)
+
+
+def test_44100_8():
+    _render(44100, 1)
+
+
+def test_44100_16():
+    _render(44100, 2)
+
+
+def _render(sample_rate: int, sample_width: int):
     ts = ToneScript(
         FreqScript([
             FrequencyComponent(350, Decimal("-13")),
@@ -24,13 +38,5 @@ def test_dial_tone():
         ])
     )
 
-    sample_rate = 44100
-    float_samples = render(ts, sample_rate)
-    int_samples = [int(s * 32767) for s in float_samples]
-    audio_bytes = pack("<%dh" % len(int_samples), *int_samples)
-
-    with wave.open("./tone.wav", "w") as wav_file:
-        wav_file.setnchannels(1)
-        wav_file.setsampwidth(2)
-        wav_file.setframerate(sample_rate)
-        wav_file.writeframes(audio_bytes)
+    path = f"./tone_{sample_rate}_{sample_width}.wav"
+    render(ts, path, sample_rate, sample_width)

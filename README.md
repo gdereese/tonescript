@@ -6,7 +6,7 @@ Python package for working with ToneScript, a syntax for describing the characte
 
 * Parses ToneScript into its components: frequencies, cadence sections, and tone segments
 * Constructs ToneScript from component objects
-* Generates tone audio from ToneScript objects
+* Renders ToneScript objects into WAV audio files
 
 ## Installation
 
@@ -72,32 +72,16 @@ print(script)
 350@-13,440@-13;10(*/0/1+2)
 ```
 
-### Generating tone audio from ToneScript objects
+### Rendering a ToneScript into a WAV audio file
 
 ```python
 import tonescript as ts
-import tonescript.audio as ts_audio
 
 # standard North American dial tone
 tone = ts.parse("350@-13,440@-13;10(*/0/1+2)")
 
-# render audio as samples (32-bit float values)
-sample_rate = 44100
-float_samples = ts_audio.render(tone, sample_rate)
-
-# convert float samples to 16-bit integers (PCM)
-int_samples = [int(s * 32767) for s in float_samples]
-
-# pack integer samples into byte array
-audio_bytes = pack("<%dh" % len(int_samples), *int_samples)
-
-# write audio into WAV file (Mono, 16-bit PCM, 8 kHz sample rate)
-with wave.open("./tone.wav", "w") as wav_file:
-    wav_file.setnchannels(1)
-    wav_file.setsampwidth(2)
-    wav_file.setframerate(sample_rate)
-    wav_file.writeframes(audio_bytes)
-
+# 16-bit PCM, 44.1 kHz sample rate
+ts.render(tone, "./dial_tone.wav", 44100, 2)
 ```
 
 ## Support
