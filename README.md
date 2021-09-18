@@ -112,4 +112,4 @@ TODO: workflow for branching and versioning
 
 ## License
 
-This library is licensed under the terms of the [MIT license](https://choosealicense.com/licenses/MIT/).
+This library is licensed under the terms of the [MIT license](https://choosealicense.com/licenses/mit/).
