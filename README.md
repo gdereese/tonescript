@@ -99,7 +99,7 @@ poetry install
 ### Linting source files
 
 ```shell
-poetry run pylint src tests
+poetry run pylint --rcfile .pylintrc src
 ```
 
 ### Running tests
