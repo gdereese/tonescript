@@ -112,7 +112,7 @@ class TestUnparse:
         self._sections[section_idx][1].append((duration_on, duration_off, freq_nums))
 
     def when_unparsed(self):
-        self._ts = ToneScript(
+        self._tone = ToneScript(
             FreqScript([
                 FrequencyComponent(frequency, level)
                 for frequency, level
@@ -129,7 +129,7 @@ class TestUnparse:
             ])
         )
 
-        self._result = unparse(self._ts)
+        self._result = unparse(self._tone)
 
     def then_result_is(self, script: str):
         assert self._result == script

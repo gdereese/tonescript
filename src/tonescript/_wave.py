@@ -1,3 +1,5 @@
+# pylint: disable=missing-module-docstring
+
 import wave
 from struct import pack
 
@@ -5,14 +7,14 @@ from .audio import generate
 from .model import ToneScript
 
 
-def render(ts: ToneScript, path: str, sample_rate: int, sample_width: int) -> None:
+def render(tone: ToneScript, path: str, sample_rate: int, sample_width: int) -> None:
     """
     Writes the audio data for a ToneScript to a WAV file.
 
     WAV files written by this function will be single-channel (mono).
     """
 
-    float_samples = generate(ts, sample_rate)
+    float_samples = generate(tone, sample_rate)
 
     int_samples = list(_float_to_pcm(f, sample_width) for f in float_samples)
     if sample_width == 1:
@@ -23,6 +25,7 @@ def render(ts: ToneScript, path: str, sample_rate: int, sample_width: int) -> No
         raise ValueError(f"sample width not supported: {sample_width}")
 
     with wave.open(path, "wb") as file:
+        file: wave.Wave_write
         file.setnchannels(1)
         file.setsampwidth(sample_width)
         file.setframerate(sample_rate)

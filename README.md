@@ -1,5 +1,8 @@
 # tonescript
 
+![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/gdereese/tonescript/CI/main?style=for-the-badge)
+![PyPI](https://img.shields.io/pypi/v/tonescript?style=for-the-badge)
+
 Python package for working with ToneScript, a syntax for describing the characteristics of the call progress tones used in telephony. It is the primary method for configuring tones in Sipura, Linksys, and Cisco VoIP systems.
 
 ## Features

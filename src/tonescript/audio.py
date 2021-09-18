@@ -20,7 +20,7 @@ from .model import ToneScript
 from .model import ToneSegment
 
 
-def generate(ts: ToneScript, sample_rate: int) -> Iterable[float]:
+def generate(tone: ToneScript, sample_rate: int) -> Iterable[float]:
     """
     Generates the audio data for a ToneScript.
 
@@ -29,20 +29,24 @@ def generate(ts: ToneScript, sample_rate: int) -> Iterable[float]:
     the `sample_rate` argument.
     """
 
-    return _expand_cadence(ts, sample_rate)
+    return _expand_cadence(tone, sample_rate)
 
 
-def _expand_cadence(ts: ToneScript, sample_rate: int) -> Iterable[float]:
+def _expand_cadence(tone: ToneScript, sample_rate: int) -> Iterable[float]:
     tone_secs = (
-        _expand_sec(sec, ts.freqscript.components, sample_rate)
+        _expand_sec(sec, tone.freqscript.components, sample_rate)
         for sec
-        in ts.cadscript.sections
+        in tone.cadscript.sections
     )
 
     return chain(*tone_secs)
 
 
-def _expand_sec(sec: CadenceSection, comps: Sequence[FrequencyComponent], sample_rate: int) -> Iterable[float]:
+def _expand_sec(
+    sec: CadenceSection,
+    comps: Sequence[FrequencyComponent],
+    sample_rate: int
+) -> Iterable[float]:
     if sec.duration.is_infinite():
         sec_duration = sum(s.duration_on + s.duration_off for s in sec.segments)
     else:
@@ -58,7 +62,12 @@ def _expand_sec(sec: CadenceSection, comps: Sequence[FrequencyComponent], sample
     return chain(*tone_segs)
 
 
-def _expand_seg(seg: ToneSegment, comps: Sequence[FrequencyComponent], max_len: int, sample_rate: int) -> Iterable[float]:
+def _expand_seg(
+    seg: ToneSegment,
+    comps: Sequence[FrequencyComponent],
+    max_len: int,
+    sample_rate: int
+) -> Iterable[float]:
     # get list of frequency components used by this segment
     seg_comps = [comps[n - 1] for n in seg.freq_nums if n > 0]
 

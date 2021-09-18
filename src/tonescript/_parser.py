@@ -1,3 +1,5 @@
+# pylint: disable=missing-module-docstring
+
 from decimal import Decimal
 
 from lark import Lark
@@ -15,6 +17,10 @@ from .model import ToneSegment
 
 @v_args(inline=True)
 class _TransformToModel(Transformer):
+    # pylint: disable=invalid-name
+    # pylint: disable=missing-function-docstring
+    # pylint: disable=no-self-use
+
     def start(self, freqscript: FreqScript, cadscript: CadScript) -> ToneScript:
         return ToneScript(freqscript, cadscript)
 
@@ -75,7 +81,8 @@ def _duration_str(val: Decimal) -> str:
 
 
 def _unparse_tone_segment(obj: ToneSegment) -> str:
-    return f"{_duration_str(obj.duration_on)}/{_duration_str(obj.duration_off)}/{'+'.join(map(str, obj.freq_nums))}"
+    freq_nums_str = '+'.join(map(str, obj.freq_nums))
+    return f"{_duration_str(obj.duration_on)}/{_duration_str(obj.duration_off)}/{freq_nums_str}"
 
 
 def _unparse_cadence_section(obj: CadenceSection) -> str:

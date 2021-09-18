@@ -1,3 +1,5 @@
+# pylint: disable=too-few-public-methods
+
 """
 Object model for representing the structure and properties of ToneScripts and their components.
 """
@@ -12,7 +14,11 @@ class ToneSegment:
     Segment of a tone with its own on/off pattern and frequency components.
     """
 
-    def __init__(self, duration_on: Decimal = None, duration_off: Decimal = None, freq_nums: Iterable[int] = None):
+    def __init__(self,
+        duration_on: Decimal = None,
+        duration_off: Decimal = None,
+        freq_nums: Iterable[int] = None
+    ):
         self.duration_off = duration_off
         """
         Duration of silence for the tone segment (in seconds).
@@ -36,7 +42,7 @@ class ToneSegment:
         else:
             duration_off = f"{self.duration_off:.3g}s"
 
-        return f"{self.__class__.__name__} on={duration_on} off={duration_off} frequencies={self.freq_nums}>"
+        return _obj_str(self, on=duration_on, off=duration_off, frequencies=self.freq_nums)
 
     @property
     def freq_nums(self) -> Sequence[int]:
@@ -76,7 +82,7 @@ class CadenceSection:
         else:
             duration = f"{self.duration:.3g}s"
 
-        return f"<{self.__class__.__name__} duration={duration} segments={len(self.segments)}>"
+        return _obj_str(self, duration=duration, segments=len(self.segments))
 
 
 class CadScript:
@@ -92,7 +98,7 @@ class CadScript:
         """
 
     def __str__(self):
-        return f"<{self.__class__.__name__} sections={len(self.sections)}>"
+        return _obj_str(self, sections=len(self.sections))
 
 
 class FrequencyComponent:
@@ -110,11 +116,12 @@ class FrequencyComponent:
 
         self.level = level
         """
-        Level of audio, in decibel-millivolts (dBm). Values are typically 0 (maximum level) and less.
+        Level of audio, in decibel-millivolts (dBm). Values are typically 0 (maximum level) and
+        less.
         """
 
     def __str__(self):
-        return f"<{self.__class__.__name__} frequency={self.frequency}Hz level={self.level:.1g}dBm>"
+        return _obj_str(self, frequency=f"{self.frequency}Hz", level=f"{self.level:.1g}dBm")
 
 
 class FreqScript:
@@ -130,7 +137,7 @@ class FreqScript:
         """
 
     def __str__(self):
-        return f"<{self.__class__.__name__} components={len(self.components)}>"
+        return _obj_str(self, components=len(self.components))
 
 
 class ToneScript:
@@ -165,11 +172,20 @@ class ToneScript:
                     duration_parts.append("Always on")
                 else:
                     duration_parts.append("On for {seg.duration_on:.4g} s")
+
                 if seg.duration_off.is_infinite():
                     duration_parts.append("Always off")
                 elif seg.duration_off != 0:
                     duration_parts.append(f"Off for {seg.duration_off:.4g} s")
+
                 duration = ", ".join(duration_parts)
-                lines.append(f"        {seg_idx + 1}) {duration}, using frequencies {', '.join(map(str, seg.freq_nums))}")
+                freq_nums_str = ', '.join(map(str, seg.freq_nums))
+
+                lines.append(f"        {seg_idx + 1}) {duration}, frequencies {freq_nums_str}")
 
         return "\n".join(lines)
+
+
+def _obj_str(obj, **attrs: dict) -> str:
+    attrs_str = " ".join(f"{k}={v}" for k, v in attrs)
+    return f"<{obj.__class__.__name__} {attrs_str}>"

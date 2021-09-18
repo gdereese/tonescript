@@ -26,7 +26,7 @@ def test_44100_16():
 
 
 def _render(sample_rate: int, sample_width: int):
-    ts = ToneScript(
+    tone = ToneScript(
         FreqScript([
             FrequencyComponent(350, Decimal("-13")),
             FrequencyComponent(440, Decimal("-13"))
@@ -39,4 +39,4 @@ def _render(sample_rate: int, sample_width: int):
     )
 
     path = f"./tone_{sample_rate}_{sample_width}.wav"
-    render(ts, path, sample_rate, sample_width)
+    render(tone, path, sample_rate, sample_width)
