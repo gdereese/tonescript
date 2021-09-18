@@ -102,7 +102,7 @@ poetry install
 ### Linting source files
 
 ```shell
-poetry run pylint --rcfile .pylintrc src
+poetry run pylint --rcfile .pylintrc src/tonescript
 ```
 
 ### Running tests

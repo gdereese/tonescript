@@ -28,7 +28,7 @@ jobs:
 
       - name: Lint
         run: |
-          poetry run pylint --rcfile .pylintrc src
+          poetry run pylint --rcfile .pylintrc src/tonescript
 
       - name: Test
         run: |
