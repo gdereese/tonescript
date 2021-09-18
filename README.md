@@ -108,6 +108,20 @@ poetry run pylint src tests
 poetry run pytest
 ```
 
+### Building HTML documentation
+
+#### For development
+
+```shell
+poetry run pdoc --template-dir docs --http : tonescript
+```
+
+#### For distribution or deployment
+
+```shell
+poetry run pdoc --template-dir docs --html tonescript
+```
+
 TODO: workflow for branching and versioning
 
 ## License

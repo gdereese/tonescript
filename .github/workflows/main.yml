@@ -14,22 +14,26 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      
+
       - name: Setup Python
         uses: actions/setup-python@v2.2.2
-        
+
       - name: Install Poetry
         run: |
           pip install poetry
-      
+
       - name: Install package
         run: |
           poetry install
-          
+
       - name: Lint
         run: |
           poetry run pylint src tests
-          
+
       - name: Test
         run: |
           poetry run pytest
+
+      - name: Build HTML docs
+        run: |
+          poetry run pdoc --template-dir docs --html tonescript
