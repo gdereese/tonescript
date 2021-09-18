@@ -37,7 +37,7 @@ Frequency components:
     2) 440 Hz @ -13 dBm
 Cadence sections:
     1) For 10 s:
-        1) Always on, using frequencies 1, 2
+        1) Always on, frequencies 1, 2
 ```
 
 ### Constructing a ToneScript
