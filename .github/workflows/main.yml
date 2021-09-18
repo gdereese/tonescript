@@ -3,9 +3,6 @@ name: CI
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
   workflow_dispatch:
 
 jobs:
@@ -33,6 +30,10 @@ jobs:
       - name: Test
         run: |
           poetry run pytest
+
+      - name: Build
+        run: |
+          poetry run build
 
       - name: Build HTML docs
         run: |
