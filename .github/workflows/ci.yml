@@ -33,7 +33,7 @@ jobs:
 
       - name: Build
         run: |
-          poetry run build
+          poetry build
 
       - name: Build HTML docs
         run: |
