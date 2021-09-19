@@ -36,13 +36,3 @@ jobs:
       - name: Test
         run: |
           poetry run pytest
-
-      - name: Build HTML docs
-        run: |
-          poetry run pdoc --template-dir docs_template --html -o docs tonescript
-
-      - name: Push HTML docs to site repo
-        run: |
-          cd docs
-          git add --all
-          git push

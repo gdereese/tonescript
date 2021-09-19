@@ -122,7 +122,7 @@ poetry run pdoc --template-dir docs_template --http : tonescript
 #### For distribution or deployment
 
 ```shell
-poetry run pdoc --template-dir docs_template --html -o docs tonescript
+poetry run pdoc --template-dir docs_template --html tonescript
 ```
 
 TODO: workflow for branching and versioning
