@@ -89,7 +89,7 @@ ts.render(tone, "./dial_tone.wav", 44100, 2)
 
 ## Support
 
-TODO: use GitHub issues
+Please use the project's [Issues page](https://github.com/gdereese/tonescript/issues) to report any issues.
 
 ## Contributing
 
@@ -124,8 +124,6 @@ poetry run pdoc --template-dir docs_template --http : tonescript
 ```shell
 poetry run pdoc --template-dir docs_template --html tonescript
 ```
-
-TODO: workflow for branching and versioning
 
 ## License
 

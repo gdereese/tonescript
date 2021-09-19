@@ -123,11 +123,7 @@ ts.render(tone, "./dial_tone.wav", 44100, 2)
 
 ## Support
 
-TODO
-
-## Contributing
-
-TODO
+Please use the project's [Issues page](https://github.com/gdereese/tonescript/issues) to report any issues.
 
 ## License
 
