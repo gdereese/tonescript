@@ -1,7 +1,4 @@
 .pytest_cache/
 __pycache__/
 dist/
-html/
-
-docs/**/*
-!docs/.nojekyll
+docs/
