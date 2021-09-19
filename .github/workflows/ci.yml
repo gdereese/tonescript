@@ -12,6 +12,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Checkout docs site repo
+        uses: actions/checkout@v2
+        with:
+          repository: gdereese/gdereese.github.io
+          path: docs
+
       - name: Setup Python
         uses: actions/setup-python@v2.2.2
 
@@ -34,5 +40,9 @@ jobs:
       - name: Build HTML docs
         run: |
           poetry run pdoc --template-dir docs_template --html -o docs tonescript
-          mv docs/tonescript/* docs
-          rmdir docs/tonescript
+
+      - name: Push HTML docs to site repo
+        cwd: docs
+        run: |
+          git add --all
+          git push

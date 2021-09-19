@@ -1,0 +1,22 @@
+name: Publish
+
+on:
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Build package
+        run: |
+          poetry build
+
+      - name: Publish package
+        run: |
+          poetry publish
+
+      - name: Build HTML docs
+        run: |
+          poetry run pdoc --template-dir docs_template --html -o docs tonescript
