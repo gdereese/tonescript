@@ -37,4 +37,4 @@ jobs:
 
       - name: Build HTML docs
         run: |
-          poetry run pdoc --template-dir docs --html tonescript
+          poetry run pdoc --template-dir docs_template --html -o docs tonescript

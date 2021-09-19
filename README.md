@@ -116,13 +116,13 @@ poetry run pytest
 #### For development
 
 ```shell
-poetry run pdoc --template-dir docs --http : tonescript
+poetry run pdoc --template-dir docs_template --http : tonescript
 ```
 
 #### For distribution or deployment
 
 ```shell
-poetry run pdoc --template-dir docs --html tonescript
+poetry run pdoc --template-dir docs_template --html -o docs tonescript
 ```
 
 TODO: workflow for branching and versioning
