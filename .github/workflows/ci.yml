@@ -35,4 +35,4 @@ jobs:
         run: |
           poetry run pdoc --template-dir docs_template --html -o docs tonescript
           mv docs/tonescript/* docs
-          rm -rf docs/tonescript
+          rmdir docs/tonescript
