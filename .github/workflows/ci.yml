@@ -42,7 +42,7 @@ jobs:
           poetry run pdoc --template-dir docs_template --html -o docs tonescript
 
       - name: Push HTML docs to site repo
-        cwd: docs
         run: |
+          cd docs
           git add --all
           git push
