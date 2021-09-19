@@ -2,8 +2,8 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
-  workflow_dispatch:
+    branches:
+      - main
 
 jobs:
   build:
@@ -30,11 +30,3 @@ jobs:
       - name: Test
         run: |
           poetry run pytest
-
-      - name: Build
-        run: |
-          poetry build
-
-      - name: Build HTML docs
-        run: |
-          poetry run pdoc --template-dir docs_template --html -o docs tonescript
