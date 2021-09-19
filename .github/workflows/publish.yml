@@ -1,11 +1,13 @@
 name: Publish
 
 on:
-
+  push:
+    tags:
+      - \d+\.\d+\.\d+
   workflow_dispatch:
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,7 +18,3 @@ jobs:
       - name: Publish package
         run: |
           poetry publish
-
-      - name: Build HTML docs
-        run: |
-          poetry run pdoc --template-dir docs_template --html -o docs tonescript

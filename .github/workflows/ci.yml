@@ -12,12 +12,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Checkout docs site repo
-        uses: actions/checkout@v2
-        with:
-          repository: gdereese/gdereese.github.io
-          path: docs
-
       - name: Setup Python
         uses: actions/setup-python@v2.2.2
 
