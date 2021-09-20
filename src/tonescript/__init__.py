@@ -1,8 +1,6 @@
 """
 Python package for working with ToneScript, a syntax for describing the characteristics of the
 call progress tones used in telephony.
-
-.. include:: index.md
 """
 
 from ._parser import parse

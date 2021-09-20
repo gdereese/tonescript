@@ -17,6 +17,37 @@ Python package for working with ToneScript, a syntax for describing the characte
 pip install tonescript
 ```
 
+## Overview of ToneScript syntax
+
+For example, the **ToneScript** that defines the standard North American dial tone is as follows:
+
+```text
+350@-13,440@-13;10(*/0/1+2)
+```
+
+`350@-13,440@-13` is the **FreqScript** portion, which describes the frequency components used to make up the sound heard in the tone. The audio frequency (in Hz) and level (in dBm) are specified for each component, and each component is separated by a comma (`,`).
+
+This FreqScript defines 2 frequency components:
+
+1. 350 Hz @ -13 dBm
+2. 440 Hz @ -13 dBm
+
+`10(*/0/1+2)` is the **CadScript** portion, which describes the cadence of the tone, or the rhythm of its defined frequency components and silence.
+
+The tone is divided into sections, each of which has its own sequence of tone segments.
+
+A tone segment plays using one or more of the frequency components defined in the FreqScript for a specified duration (in seconds), followed by an optional period of silence.
+
+A cadence section can also have its own duration; the tone segments within it are played and looped as needed until the section duration has elapsed.
+
+When specifying duration values, an asterisk (`*`) indicates that the duration is continuous.
+
+The above CadScript defines a single section which plays for 10 seconds. The section has a single tone segment:
+
+* `*` = Plays continuously
+* `0` = No silence
+* `1+2` = Uses the first and second frequency components in the list
+
 ## Usage
 
 ### Parsing a ToneScript
@@ -109,20 +140,6 @@ poetry run pylint --rcfile .pylintrc src/tonescript
 
 ```shell
 poetry run pytest
-```
-
-### Building HTML documentation
-
-#### For development
-
-```shell
-poetry run pdoc --template-dir docs_template --http : tonescript
-```
-
-#### For distribution or deployment
-
-```shell
-poetry run pdoc --template-dir docs_template --html tonescript
 ```
 
 ## License
