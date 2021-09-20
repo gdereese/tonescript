@@ -11,6 +11,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Setup Python
+        uses: actions/setup-python@v2.2.2
+
+      - name: Install Poetry
+        run: |
+          pip install poetry
+
+      - name: Install package
+        run: |
+          poetry install
+
       - name: Build package
         run: |
           poetry build
